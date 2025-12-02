@@ -69,6 +69,12 @@ export default function DashboardPage() {
     fetchData();
   }, [router]);
 
+  //OPTIMISTIC UPDATE TRIP BARU DARI CREATE AI
+  const handleTripCreated = (newTrip: any) => {
+    if (!newTrip) return;
+    setTrips((prev) => [newTrip, ...prev])
+  }
+
   // Logout
   const handleLogout = async () => {
     await supabase.auth.signOut();
@@ -172,7 +178,7 @@ export default function DashboardPage() {
           </button>
 
           {/* Modals */}
-          <CreateAi isOpen={isOpen} onClose={() => setIsOpen(false)} />
+          <CreateAi isOpen={isOpen} onClose={() => setIsOpen(false)} onTripCreated={handleTripCreated}/>
           <GenerateImageModal
             isOpen={imageModalOpen}
             onClose={() => setImageModalOpen(false)}
